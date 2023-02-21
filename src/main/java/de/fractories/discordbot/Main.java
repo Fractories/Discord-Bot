@@ -18,8 +18,7 @@ public class Main {
         botProperties.load(new InputStreamReader(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("settings.properties"))));
         JDABuilder builder = JDABuilder.createDefault(botProperties.getProperty("token"));
         builder.setEnabledIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS));
-        builder.addEventListeners(new SlashCommandListener(), new ContextMenuListener());
-        Util.register(builder.build());
+        Util.register(builder);
     }
 
 }

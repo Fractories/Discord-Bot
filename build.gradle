@@ -1,15 +1,35 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
+
 plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'java'
 }
 
 group 'de.fractories'
 version '1.0-SNAPSHOT'
 
+jar {
+    manifest {
+        attributes(
+             'Main-Class': 'de.fractories.discordbot.Main'
+        )
+    }
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation("net.dv8tion:JDA:5.0.0-beta.4")
+    shadow localGroovy()
+    shadow gradleApi()
+
+    implementation "net.dv8tion:JDA:5.0.0-beta.4"
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.5'
 }
+
+task relocateShadowJar(type: ConfigureShadowRelocation) {
+    target = tasks.shadowJar
+}
+
+tasks.shadowJar.dependsOn tasks.relocateShadowJar
