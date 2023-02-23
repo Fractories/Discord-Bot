@@ -19,19 +19,18 @@ import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
 import net.dv8tion.jda.api.interactions.modals.ModalMapping;
 
-public class SetupCommand extends ListenerAdapter implements CommandExecutor {
+import java.util.Objects;
 
+public class SetupCommand extends ListenerAdapter implements CommandExecutor {
     TextChannel open, message;
 
     @Override
     public void run(SlashCommandInteractionEvent event) {
-        if (!event.getMember().hasPermission(Permission.ADMINISTRATOR)) return;
-        if (event.getSubcommandName().equals("tickets"))
+        if (!Objects.requireNonNull(event.getMember()).hasPermission(Permission.ADMINISTRATOR)) return;
+        if (Objects.requireNonNull(event.getSubcommandName()).equalsIgnoreCase("tickets"))
             event.reply("Wähle ein paar Rollen aus, welche zugriff auf die Channel haben sollen").addActionRow(EntitySelectMenu.create("S1", EntitySelectMenu.SelectTarget.ROLE).setMaxValues(10).build()).queue();
         else if (event.getSubcommandName().equals("defaultrole"))
-            event.reply("Wähle nun die Rolle aus.").addActionRow(
-                    EntitySelectMenu.create("S4", EntitySelectMenu.SelectTarget.ROLE).build()
-            ).queue();
+            event.reply("Wähle nun die Rolle aus.").addActionRow(EntitySelectMenu.create("S4", EntitySelectMenu.SelectTarget.ROLE).build()).queue();
     }
 
     @Override

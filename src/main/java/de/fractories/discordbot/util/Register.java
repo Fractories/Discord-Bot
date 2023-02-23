@@ -1,11 +1,11 @@
 package de.fractories.discordbot.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Register {
 
     private final HashMap<String, CommandExecutor> commandsRegistered = new HashMap<>();
+
     public void addCommand(String name, CommandExecutor commandExecutor) {
         commandsRegistered.put(name, commandExecutor);
     }
